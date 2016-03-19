@@ -1,12 +1,15 @@
 IP TABLES:
 --------------
-root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --match multiport --dports 80,22,53 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.236 -p ICMP --icmp-type 8 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.94 -p ICMP --icmp-type 8 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.236 -p ICMP --icmp-type 8 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.94 -p ICMP --icmp-type 8 -j ACCEPT
+root@web1:/home/anuj#iptables -N LOGGING
+root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --match multiport --dports 23,100,25,20,21 -j DROP
+root@web1:/home/anuj#iptables -I INPUT -s 10.102.62.236 -j ACCEPT
+root@web1:/home/anuj#iptables -I INPUT -s 10.102.62.94 -j ACCEPT
+root@web1:/home/anuj#iptables -I INPUT -s 10.102.61.30 -j ACCEPT
+root@web1:/home/anuj# iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
+root@web1:/home/anuj#iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+root@web1:/home/anuj#iptables -A LOGGING -j DROP
 root@web1:/home/anuj# sudo iptables -A INPUT -p ICMP --icmp-type 8 -j DROP
-
+root@web1:/home/anuj#iptables -A INPUT -j REJECT
 # to check iptables:
 $sudo iptables -L
 # To Flush
