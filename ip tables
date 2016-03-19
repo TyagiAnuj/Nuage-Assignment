@@ -1,18 +1,13 @@
 IP TABLES:
 --------------
-
-root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --sport 22 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --sport 80 -j ACCEPT
+root@web1:/home/anuj# sudo iptables -A INPUT -p tcp --match multiport --dports 80,22,53 -j ACCEPT
+root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.236 -p ICMP --icmp-type 8 -j ACCEPT
+root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.94 -p ICMP --icmp-type 8 -j ACCEPT
 root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.236 -p ICMP --icmp-type 8 -j ACCEPT
 root@web1:/home/anuj# sudo iptables -A INPUT -s 10.102.62.94 -p ICMP --icmp-type 8 -j ACCEPT
 root@web1:/home/anuj# sudo iptables -A INPUT -p ICMP --icmp-type 8 -j DROP
----------------------------------------------------------------------------------
-On Web Server 2:
-------------------
 
-
-----------------------------------------------------------------------------------
-On Database Sever:
----------------------
+# to check iptables:
+$sudo iptables -L
+# To Flush
+$sudo iptables -F
